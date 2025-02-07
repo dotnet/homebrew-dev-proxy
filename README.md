@@ -8,7 +8,7 @@
 </h4>
 
 ```console
-brew tap microsoft/dev-proxy
+brew tap dotnet/dev-proxy
 brew install dev-proxy
 ```
 

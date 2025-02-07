@@ -10,7 +10,7 @@ class DevProxyBeta < Formula
 
   desc "Dev Proxy #{proxyVersion}"
   homepage "https://aka.ms/devproxy"
-  url "https://github.com/microsoft/dev-proxy/releases/download/v#{proxyVersion}/dev-proxy-#{proxyArch}-v#{proxyVersion}.zip"
+  url "https://github.com/dotnet/dev-proxy/releases/download/v#{proxyVersion}/dev-proxy-#{proxyArch}-v#{proxyVersion}.zip"
   sha256 proxySha
   version proxyVersion
 
