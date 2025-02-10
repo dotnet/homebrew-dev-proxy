@@ -8,4 +8,4 @@ For help and questions about using this project, please create an issue in the [
 
 ## Microsoft Support Policy  
 
-Support for this **PROJECT or PRODUCT** is limited to the resources listed above.
+Support for this **PROJECT** is limited to the resources listed above.
