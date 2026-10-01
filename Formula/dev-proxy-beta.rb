@@ -1,11 +1,11 @@
 class DevProxyBeta < Formula
-  proxyVersion = "4.0.0-beta.4"
+  proxyVersion = "4.0.0-beta.5"
   if OS.linux?
     proxyArch = "linux-x64"
-    proxySha = "e3efcc1d1a82da64627a57c1d3176e78a836aeb2df4272f5099b85468945ff8d"
+    proxySha = "5ac39e7e7a29247c9107ca991148a5681aaede581d750737c98f4b778f99c77c"
   else
     proxyArch = "osx-x64"
-    proxySha = "152e39f2cd2346679c189e4bea54cd4d822e256b0646e2fa8f23cd329fb05ebc"
+    proxySha = "cbffac36b7eb4eebafa6095bb9ed6999eeaf9af5c77071833118a949edf0b145"
   end
 
   desc "Dev Proxy #{proxyVersion}"
