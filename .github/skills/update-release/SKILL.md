@@ -35,7 +35,24 @@ https://github.com/dotnet/dev-proxy/releases
 
 ### Step 3: Calculate SHA256 Checksums
 
-Download each platform's zip file and calculate the SHA256 checksum.
+Download each platform's zip file and calculate the SHA256 checksum. Which platforms you need depends on the formula:
+
+| Formula | Platforms |
+|---------|-----------|
+| Stable (`dev-proxy.rb`) | `osx-x64`, `linux-x64` |
+| Beta (`dev-proxy-beta.rb`) | `osx-x64`, `osx-arm64`, `linux-x64`, `linux-arm64` |
+
+Generic command (replace `{ARCH}` with the platform, e.g. `osx-arm64`):
+```bash
+curl -sL "https://github.com/dotnet/dev-proxy/releases/download/v{VERSION}/dev-proxy-{ARCH}-v{VERSION}.zip" | shasum -a 256
+```
+
+Alternatively, read the digests GitHub publishes for the release assets:
+```bash
+gh release view v{VERSION} -R dotnet/dev-proxy --json assets --jq '.assets[] | .name + " " + .digest'
+```
+
+If a release is missing an asset the formula needs (e.g. no `osx-arm64` zip), stop and tell the user. Don't update the formula with a partial set of platforms.
 
 **macOS (osx-x64):**
 ```bash
@@ -54,20 +71,45 @@ Replace `{VERSION}` with the version number (e.g., `2.1.0-beta.4` or `2.0.0`).
 Update the formula file with:
 
 1. New `proxyVersion` value (without the `v` prefix)
-2. New `proxySha` for Linux
-3. New `proxySha` for macOS
+2. New `proxySha` for every platform in the formula
 
-Formula structure (both files follow the same pattern):
+Stable formula structure (x64 only):
 
 ```ruby
-class DevProxy < Formula  # or DevProxyBeta
+class DevProxy < Formula
   proxyVersion = "{VERSION}"
   if OS.linux?
     proxyArch = "linux-x64"
-    proxySha = "{LINUX_SHA256}"
+    proxySha = "{LINUX_X64_SHA256}"
   else
     proxyArch = "osx-x64"
-    proxySha = "{OSX_SHA256}"
+    proxySha = "{OSX_X64_SHA256}"
+  end
+  # ... rest of formula
+end
+```
+
+Beta formula structure (x64 and arm64):
+
+```ruby
+class DevProxyBeta < Formula
+  proxyVersion = "{VERSION}"
+  if OS.linux?
+    if Hardware::CPU.arm?
+      proxyArch = "linux-arm64"
+      proxySha = "{LINUX_ARM64_SHA256}"
+    else
+      proxyArch = "linux-x64"
+      proxySha = "{LINUX_X64_SHA256}"
+    end
+  else
+    if Hardware::CPU.arm?
+      proxyArch = "osx-arm64"
+      proxySha = "{OSX_ARM64_SHA256}"
+    else
+      proxyArch = "osx-x64"
+      proxySha = "{OSX_X64_SHA256}"
+    end
   end
   # ... rest of formula
 end
@@ -81,6 +123,7 @@ end
 | Class | `DevProxy` | `DevProxyBeta` |
 | Binary | `devproxy` | `devproxy-beta` |
 | Livecheck | `strategy :github_latest` | `regex(/^v(.*)$/i)` |
+| Architectures | x64 (macOS, Linux) | x64 + arm64 (macOS, Linux) |
 
 ## Important Notes
 
