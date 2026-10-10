@@ -1,20 +1,20 @@
 class DevProxyBeta < Formula
-  proxyVersion = "4.0.0-beta.9"
+  proxyVersion = "4.0.0-beta.10"
   if OS.linux?
     if Hardware::CPU.arm?
       proxyArch = "linux-arm64"
-      proxySha = "fd59915af205fb6c6fbd3034cf54d42bfab5f280c54c3c58a10afcb204559b23"
+      proxySha = "36d334bb08c24f4a2d265afced64ef4911809ce961ebf8e059b3bdc5cabf8b1e"
     else
       proxyArch = "linux-x64"
-      proxySha = "37bb98dfbb5012448c595728fa00e229e2d61f7cbae506c5f7dc90c7e7227241"
+      proxySha = "2d8bc870550b3b3ce215f8b6c366c24117b74413f764d1ea0be1691bb82ed9b7"
     end
   else
     if Hardware::CPU.arm?
       proxyArch = "osx-arm64"
-      proxySha = "e6c4888f306a9a30dc0a0f2d98566de4ba7d2a40c72b35073120cbd71f0acec4"
+      proxySha = "f545beb00f39577b28bb5bcd9d47e828990b9cd7b2488b987e9fe5f5dc3e368b"
     else
       proxyArch = "osx-x64"
-      proxySha = "7c280901004859f7af3c1d1651f088398a4518cdfa1574e216abfa5ae61de190"
+      proxySha = "84a2e1b3c5ecffda17e4f9abce363a783789ba3b1a7c59d585587a647d6ff37d"
     end
   end
 
